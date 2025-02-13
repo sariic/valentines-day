@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day Puzzle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe4e1;
+      color: #d83a56;
+      text-align: center;
+      padding: 50px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 10px;
+      border: 1px solid #d83a56;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    input {
+      width: calc(100% - 22px);
+      padding: 10px;
+      border: 1px solid #d83a56;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #d83a56;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #c32b45;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Valentine's Day Puzzle</h1>
+    <p>Answer all the puzzles to receive your special gift!</p>
+    <textarea id="puzzle" readonly>"U mjesecu kada jesen dolazi, ljubav nam kao lišće pada u zagrljaj. Dva broja stoje: prvi nosi šestu stepenicu, drugi čuva krug savršenog trajanja."</textarea>
+    <input type="text" id="answer" placeholder="Unesi odgovor...">
+    <button id="submitBtn">Submit</button>
+  </div>
+
+  <script>
+    // Array of puzzles and answers
+    const puzzles = [
+      {
+        question: "U mjesecu kada jesen dolazi, ljubav nam kao lišće pada u zagrljaj. Dva broja stoje: prvi nosi šestu stepenicu, drugi čuva krug savršenog trajanja.",
+        answer: "26.09."
+      },
+      {
+        question: "Godina za godinom, kao broj prstiju koji čvrsto drže našu priču. Pola puta do deset, a ljubav raste sve više i više.",
+        answer: "5"
+      },
+      {
+        question: "Dvije riječi, osam slova, skrivena tajna svakog pogleda. Šapćem ih kada zora svane i ponavljam kad mjesec kane.",
+        answer: "volim te"
+      }
+    ];
+
+    let currentPuzzleIndex = 0;
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+      const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+
+      // Check if answer is correct
+      if (userAnswer === puzzles[currentPuzzleIndex].answer) {
+        currentPuzzleIndex++;
+
+        // Check if all puzzles are solved
+        if (currentPuzzleIndex === puzzles.length) {
+          alert("Congratulations! You've solved all the puzzles. Your gift is downloading now.");
+          // Trigger file download
+          const link = document.createElement('a');
+          link.href = 'gift.pptx';  // Replace with actual file path
+          link.download = 'ValentinesGift.pptx';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          // Show next puzzle
+          document.getElementById('puzzle').value = puzzles[currentPuzzleIndex].question;
+          document.getElementById('answer').value = ""; // Clear input field
+        }
+      } else {
+        // Clear input field for another try
+        document.getElementById('answer').value = "";
+      }
+    });
+  </script>
+</body>
+</html>
